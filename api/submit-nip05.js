@@ -7,9 +7,10 @@
 
 import { nip19 } from 'nostr-tools';
 
-// Repository configuration (hardcoded since these are not secrets)
-const GITHUB_OWNER = 'bitkarrot';
-const GITHUB_REPO = 'nip05-service';
+// Repository configuration from environment variables
+// Set these in Vercel dashboard: Settings → Environment Variables
+const GITHUB_OWNER = process.env.GITHUB_OWNER || 'bitkarrot';
+const GITHUB_REPO = process.env.GITHUB_REPO || 'nip05-service';
 
 function isValidHex(str) {
   return /^[0-9a-fA-F]{64}$/.test(str);

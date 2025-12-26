@@ -80,10 +80,15 @@ Visit the registration form to request your NIP-05 identifier. Once your PR is a
 
 Add a custom domain in the Vercel dashboard under **Settings** → **Domains**.
 
-### 5. Update Repository References
+### 5. Configure Repository (For Forks)
 
-If you fork or rename this repository, update these files:
-- `api/submit-nip05.js` - Update `GITHUB_OWNER` and `GITHUB_REPO` constants
+If you fork this repository, set these environment variables in Vercel:
+```bash
+vercel env add GITHUB_OWNER    # Your GitHub username
+vercel env add GITHUB_REPO     # Your repository name
+```
+
+Or set them in the Vercel dashboard under **Settings** → **Environment Variables**.
 
 ## Files
 
