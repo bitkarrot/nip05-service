@@ -84,8 +84,6 @@ Add a custom domain in the Vercel dashboard under **Settings** → **Domains**.
 
 If you fork or rename this repository, update these files:
 - `api/submit-nip05.js` - Update `GITHUB_OWNER` and `GITHUB_REPO` constants
-- `add-nip05.html` - Update the PR link URL
-- `.github/workflows/add-nip05.yml` - Update the NIP-05 domain in the PR body
 
 ## Files
 

@@ -116,9 +116,10 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: `Request submitted! A pull request will be created for ${username}@${GITHUB_OWNER}.github.io`,
+      message: `Request submitted! A pull request will be created for ${username}`,
       username,
       pubkey,
+      pr_url: `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/pulls`,
     });
   } catch (error) {
     console.error('Error:', error.message);
