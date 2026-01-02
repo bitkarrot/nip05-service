@@ -10,19 +10,20 @@ Visit the registration form to request your NIP-05 identifier. Once your PR is a
 
 ```
 ┌─────────────────┐     ┌──────────────────────┐     ┌─────────────────────┐
-│   Web Form      │────▶│  Vercel Serverless   │────▶│  GitHub Actions     │
+│   Web Form      │────▶│  Express Server      │────▶│  GitHub Actions     │
 │ (add-nip05.html)│     │  (/api/submit-nip05) │     │  (add-nip05.yml)    │
 └─────────────────┘     └──────────────────────┘     └─────────────────────┘
-                                                              │
-                                                              ▼
-                                                     ┌─────────────────────┐
-                                                     │  Pull Request       │
-                                                     │  (nostr.json)       │
-                                                     └─────────────────────┘
+│
+▼
+┌─────────────────────┐
+│  Pull Request       │
+│  (nostr.json)       │
+└─────────────────────┘
 ```
 
+
 1. User submits username + pubkey via the web form
-2. Vercel serverless function validates input and triggers a GitHub `repository_dispatch` event
+2. Express server validates input and triggers a GitHub `repository_dispatch` event
 3. GitHub Actions workflow updates `nostr.json` and creates a PR using `peter-evans/create-pull-request`
 4. Repository owner reviews and merges the PR
 
@@ -48,59 +49,45 @@ Visit the registration form to request your NIP-05 identifier. Once your PR is a
 4. Check **"Allow GitHub Actions to create and approve pull requests"**
 5. Click **Save**
 
-### 3. Deploy to Vercel
+### 3. Deploy to Zeabur
 
-1. Install Vercel CLI:
-   ```bash
-   npm install -g vercel
-   ```
+1. Go to [Zeabur Dashboard](https://zeabur.com)
+2. Create a new project or select an existing one
+3. Click **Add Service** and select **Git**
+4. Connect your GitHub repository (bitkarrot/nip05-service)
+5. Zeabur will automatically detect the Dockerfile and deploy
 
-2. Login to Vercel:
-   ```bash
-   vercel login
-   ```
+### 4. Set Environment Variables in Zeabur
 
-3. Deploy the project:
-   ```bash
-   vercel
-   ```
+In your Zeabur service settings, add these environment variables:
 
-4. Set the GitHub token as an environment variable in Vercel:
-   ```bash
-   vercel env add GITHUB_TOKEN
-   ```
-   Paste your token when prompted, and select all environments (Production, Preview, Development).
+- **`GITHUB_TOKEN`**: Your GitHub personal access token (required)
+- **`GITHUB_OWNER`**: Your GitHub username (default: `bitkarrot`)
+- **`GITHUB_REPO`**: Your repository name (default: `nip05-service`)
+- **`ALLOWED_ORIGIN`**: CORS origin (default: `*`)
 
-5. Redeploy to apply the environment variable:
-   ```bash
-   vercel --prod
-   ```
+### 5. Configure Your Domain (Optional)
 
-### 4. Configure Your Domain (Optional)
+In Zeabur service settings, add a custom domain under **Domains** section. The service will be accessible at the provided URL.
 
-Add a custom domain in the Vercel dashboard under **Settings** → **Domains**.
+### 6. Configure Repository (For Forks)
 
-### 5. Configure Repository (For Forks)
-
-If you fork this repository, set these environment variables in Vercel:
-```bash
-vercel env add GITHUB_OWNER    # Your GitHub username
-vercel env add GITHUB_REPO     # Your repository name
-```
-
-Or set them in the Vercel dashboard under **Settings** → **Environment Variables**.
+If you fork this repository, update the environment variables in Zeabur:
+- `GITHUB_OWNER`: Your GitHub username
+- `GITHUB_REPO`: Your repository name
 
 ## Files
 
 - **`.well-known/nostr.json`** - The NIP-05 identifier mapping
 - **`add-nip05.html`** - User-facing registration form
-- **`api/submit-nip05.js`** - Vercel serverless function
-- **`vercel.json`** - Vercel configuration
+- **`api/submit-nip05.js`** - API handler for form submissions
+- **`server.js`** - Express server entry point
+- **`Dockerfile`** - Container configuration for Zeabur
 - **`.github/workflows/add-nip05.yml`** - GitHub Actions workflow
 
 ## Security Notes
 
-- The GitHub token is stored as a Vercel environment variable, never exposed to users
+- The GitHub token is stored as a Zeabur environment variable, never exposed to users
 - Input validation happens both client-side and server-side
 - The workflow validates username and pubkey format before making changes
 - PRs require manual approval before merging
