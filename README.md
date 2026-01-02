@@ -13,12 +13,12 @@ Visit the registration form to request your NIP-05 identifier. Once your PR is a
 │   Web Form      │────▶│  Express Server      │────▶│  GitHub Actions     │
 │ (add-nip05.html)│     │  (/api/submit-nip05) │     │  (add-nip05.yml)    │
 └─────────────────┘     └──────────────────────┘     └─────────────────────┘
-│
-▼
-┌─────────────────────┐
-│  Pull Request       │
-│  (nostr.json)       │
-└─────────────────────┘
+                                                               │
+                                                               ▼
+                                                      ┌─────────────────────┐
+                                                      │  Pull Request       │
+                                                      │  (nostr.json)       │
+                                                      └─────────────────────┘
 ```
 
 
