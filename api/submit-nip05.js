@@ -1,14 +1,16 @@
 /**
- * Vercel Serverless Function for NIP-05 Registration
+ * NIP-05 Registration Handler
  * 
- * Environment variables required (set in Vercel dashboard):
+ * Environment variables required:
  * - GITHUB_TOKEN: Personal access token with repo scope
+ * - GITHUB_OWNER: GitHub repository owner (default: bitkarrot)
+ * - GITHUB_REPO: GitHub repository name (default: nip05-service)
+ * - ALLOWED_ORIGIN: CORS origin (default: *)
  */
 
 import { nip19 } from 'nostr-tools';
 
 // Repository configuration from environment variables
-// Set these in Vercel dashboard: Settings → Environment Variables
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'bitkarrot';
 const GITHUB_REPO = process.env.GITHUB_REPO || 'nip05-service';
 
@@ -41,7 +43,7 @@ function validateUsername(username) {
     throw new Error('Username is required');
   }
   username = username.trim().toLowerCase();
-  if (!/^[a-z0-9_\.\-]+$/.test(username)) {
+  if (!/^[a-z0-9_\\.\\-]+$/.test(username)) {
     throw new Error('Username can only contain lowercase letters, numbers, hyphens, underscores, and dots');
   }
   if (username.length < 1 || username.length > 64) {
@@ -51,13 +53,15 @@ function validateUsername(username) {
 }
 
 // CORS headers
-const corsHeaders = {
+const getCorsHeaders = () => ({
   'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
-};
+});
 
 export default async function handler(req, res) {
+  const corsHeaders = getCorsHeaders();
+
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', corsHeaders['Access-Control-Allow-Origin']);
@@ -97,7 +101,7 @@ export default async function handler(req, res) {
           'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
           'Accept': 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
-          'User-Agent': 'NIP05-Vercel-Function',
+          'User-Agent': 'NIP05-Service',
         },
         body: JSON.stringify({
           event_type: 'add-nip05',
