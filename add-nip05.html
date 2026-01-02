@@ -180,10 +180,13 @@
                     throw new Error(result.error || 'Failed to submit request');
                 }
 
+                // Get PR URL from API response or use default
+                const prUrl = result.pr_url || 'https://github.com/bitkarrot/nip05-service/pulls';
+                
                 successMessage.innerHTML = `
                     <strong>Success!</strong> ${result.message}<br><br>
                     A pull request will be created automatically. Check the 
-                    <a href="https://github.com/bitkarrot/nip05-service/pulls" target="_blank" class="underline text-green-200 hover:text-white">
+                    <a href="${prUrl}" target="_blank" class="underline text-green-200 hover:text-white">
                         Pull Requests page
                     </a> in a few moments.<br><br>
                     Once merged, your NIP-05 identifier will be active.
