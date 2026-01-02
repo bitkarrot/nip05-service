@@ -29,6 +29,11 @@ Visit the registration form to request your NIP-05 identifier. Once your PR is a
 
 ## Setup Instructions
 
+### 0. Fork this repo
+
+Clone the repository in your github by forking this repository.
+If you have already forked this repo, you can skip this step.
+
 ### 1. Create a GitHub Personal Access Token
 
 1. Go to [GitHub Settings > Developer settings > Personal access tokens > Fine-grained tokens](https://github.com/settings/tokens?type=beta)
