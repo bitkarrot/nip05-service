@@ -54,17 +54,29 @@ If you have already forked this repo, you can skip this step.
 4. Check **"Allow GitHub Actions to create and approve pull requests"**
 5. Click **Save**
 
-### 3. Deploy to Zeabur
+### 3. Deployment Options
+
+Choose one of the following deployment methods:
+
+#### Option A: Deploy to Zeabur
 
 1. Go to [Zeabur Dashboard](https://zeabur.com)
 2. Create a new project or select an existing one
 3. Click **Add Service** and select **Git**
-4. Connect your GitHub repository (bitkarrot/nip05-service)
-5. Zeabur will automatically detect the Dockerfile and deploy
+4. Connect your GitHub repository
+5. Zeabur will automatically detect the `Dockerfile` and deploy
 
-### 4. Set Environment Variables in Zeabur
+#### Option B: Deploy to Vercel
 
-In your Zeabur service settings, add these environment variables:
+1. Go to [Vercel Dashboard](https://vercel.com)
+2. Click **New Project**
+3. Import your forked repository
+4. Vercel will automatically detect the project configuration (`vercel.json` and `api/` directory)
+5. Click **Deploy**
+
+### 4. Set Environment Variables
+
+Regardless of your deployment method, you must set these environment variables in your hosting provider's dashboard:
 
 - **`GITHUB_TOKEN`**: Your GitHub personal access token (required)
 - **`GITHUB_OWNER`**: Your GitHub username (default: `bitkarrot`)
@@ -73,11 +85,11 @@ In your Zeabur service settings, add these environment variables:
 
 ### 5. Configure Your Domain (Optional)
 
-In Zeabur service settings, add a custom domain under **Domains** section. The service will be accessible at the provided URL.
+Add a custom domain in your provider's settings (Zeabur **Domains** section or Vercel **Settings > Domains**). The service will be accessible at the provided URL.
 
 ### 6. Configure Repository (For Forks)
 
-If you fork this repository, update the environment variables in Zeabur:
+If you fork this repository, update the environment variables in your deployment dashboard:
 - `GITHUB_OWNER`: Your GitHub username
 - `GITHUB_REPO`: Your repository name
 
