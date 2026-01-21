@@ -25,3 +25,5 @@ npm-debug.log*
 
 # Optional: lock files (uncomment if you don't want to track)
 # package-lock.json
+.vercel
+.env*.local
