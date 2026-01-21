@@ -1,5 +1,9 @@
 # NIP-05 Automated PR Service
 
+Deploy with Vercel 
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbitkarrot%2Fnip05-service) 
+
 Automates NIP-05 identifier registration via pull requests. Users submit their Nostr pubkey through a web form, and the system automatically creates a PR to add them to the `nostr.json` file.
 
 ## For Users
